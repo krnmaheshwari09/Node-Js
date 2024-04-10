@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "03-server_express",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,6 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "express": "^4.19.2",
-    "url": "^0.11.3"
+    "express": "^4.19.2"
   }
 }

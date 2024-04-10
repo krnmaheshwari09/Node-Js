@@ -2,7 +2,7 @@ import * as http from "http"
 import * as fs from "fs"
 import * as url from "url"
 
-const myServer = http.createServer((req, res) => {
+function myHandler(req, res){
     if(req.url === "/favicon.ico") return res.end();
     const log = `${Date.now()}: ${req.method} ${req.url} New Request Recieved\n`;
     const myUrl = url.parse(req.url, true);
@@ -30,6 +30,7 @@ const myServer = http.createServer((req, res) => {
             default: res.end("Error 404: Not Found");
         }
     })
-});
+}
+const myServer = http.createServer(myHandler);
 
 myServer.listen(8000, () => console.log("Server Started!"));
