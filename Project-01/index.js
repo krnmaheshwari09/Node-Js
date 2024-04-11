@@ -8,6 +8,18 @@ const PORT = 3000;
 
 // Middlewares - almost like plugin in express
 app.use(express.urlencoded({ extended: false }));
+// custom middleware
+app.use((req, res, next) => {
+    console.log("Hello from middleware 1");
+    req.myusername = "Karan";
+    // return res.json({ msg: "Hello from middleware."}); to return the request here.
+    next();
+});
+app.use((req, res, next) => {
+    console.log("Hello from middleware 2", req.myusername);
+    // return res.json({ msg: "Hello from middleware."}); to return the request here.
+    next();
+});
 
 // Routes
 app.get('/users', (req, res) => {
