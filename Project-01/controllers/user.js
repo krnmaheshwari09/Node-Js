@@ -15,8 +15,24 @@ async function handleGetUserById(req, res) {
 }
 
 async function handleEditUserById(req, res) {
-    await User.findByIdAndUpdate(req.params.id, { last_name: "changed" });
-    return res.json({ msg: "updated" });
+    const { first_name, last_name, email, gender, job_title } = req.body;
+    // Create an empty object to store the update operations
+    const updates = {};
+    // Check each property and add it to the updates object if it exists
+    if (first_name) updates['first_name'] = first_name;
+    if (last_name) updates['last_name'] = last_name;
+    if (email) updates['email'] = email;
+    if (gender) updates['gender'] = gender;
+    if (job_title) updates['job_title'] = job_title;
+
+    try {
+        // Perform a single database call to update all properties
+        await User.findByIdAndUpdate(req.params.id, updates);
+        return res.json({ msg: "updated" });
+    } catch (error) {
+        console.error("Error updating user:", error);
+        return res.status(500).json({ error: "An error occurred while updating user" });
+    }
 }
 
 async function handleDeleteUserById(req, res) {

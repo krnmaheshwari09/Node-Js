@@ -6,9 +6,10 @@ const {logReqRes} = require("./middlewares/index.js");
 
 const app = express();
 const PORT = 3000;
+// const url =`mongodb+srv://krnmaheshwari09:K@r@n2004@cluster0.ww3hvmy.mongodb.net/`
 
 // connection
-connectMongoDB('mongodb://127.0.0.1:27017/youtube-app-1')
+connectMongoDB(`mongodb://127.0.0.1:27017/youtube-app-1`)
     .then(() => console.log("MongoDB Connected"))
     .catch((err) => console.log("MongoDB Error", err));
 
