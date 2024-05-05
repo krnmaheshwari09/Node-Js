@@ -1,9 +1,14 @@
 import express from "express";
 import path from "path";
-import urlRoute from "./routes/url.js";
+import cookieParser from "cookie-parser";
 import connectMongoDB from "./config.js";
-import staticRouter from './routes/staticRouter.js'
+import { restrictToLoggedinUserOnly, checkAuth } from "./middlewares/auth.js";
+
 import URL from './models/url.js';
+
+import urlRoute from "./routes/url.js";
+import staticRouter from './routes/staticRouter.js';
+import userRoute from "./routes/user.js";
 
 const app = express();
 const PORT = 3000;
@@ -18,10 +23,11 @@ app.set('views', path.resolve("./views"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 
-
-app.use("/url", urlRoute);
-app.use("/", staticRouter);
+app.use("/url", restrictToLoggedinUserOnly, urlRoute);
+app.use("/", checkAuth, staticRouter);
+app.use('/user', userRoute);
 
 app.listen(PORT, () => console.log(`Server started at PORT:${PORT}`));
