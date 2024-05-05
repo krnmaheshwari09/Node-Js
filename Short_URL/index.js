@@ -8,7 +8,7 @@ import URL from './models/url.js';
 const app = express();
 const PORT = 3000;
 
-connectMongoDB("mongodb+srv://krnmaheshwari09:Karan2004@test-data.edzavq1.mongodb.net/?retryWrites=true&w=majority&appName=test-data")
+connectMongoDB("") //enter your database url here
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.log("Error Occur", err));
 
