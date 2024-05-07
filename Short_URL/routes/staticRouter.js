@@ -4,8 +4,8 @@ import URL from "../models/url.js";
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    console.log("hey loged in");
-    console.log(req.user);
+    // console.log("hey loged in");
+    // console.log(req.user);
     if(!req.user){
         return res.redirect("/login");
     }
