@@ -1,14 +1,17 @@
 import express from "express";
 import URL from "../models/url.js";
+import { restrictTo } from "../middlewares/auth.js";
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    // console.log("hey loged in");
-    // console.log(req.user);
-    if(!req.user){
-        return res.redirect("/login");
-    }
+router.get('/admin/urls', restrictTo(["ADMIN"]), async (req, res) => {
+    const allurls = await URL.find({});
+    return res.render("home", {
+        urls: allurls,
+    });
+})
+
+router.get('/', restrictTo(["NORMAL", "ADMIN"]), async (req, res) => {
     const allurls = await URL.find({ createdBy: req.user._id });
     return res.render("home", {
         urls: allurls,

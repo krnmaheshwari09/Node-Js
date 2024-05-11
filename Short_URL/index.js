@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import connectMongoDB from "./config.js";
-import { restrictToLoggedinUserOnly, checkAuth } from "./middlewares/auth.js";
+import { checkForAuthentication, restrictTo } from "./middlewares/auth.js";
 
 import URL from './models/url.js';
 
@@ -24,10 +24,11 @@ app.set('views', path.resolve("./views"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(checkForAuthentication);
 
 
-app.use("/url", restrictToLoggedinUserOnly, urlRoute);
-app.use("/", checkAuth, staticRouter);
+app.use("/url", restrictTo(["NORMAL", "ADMIN"]), urlRoute);
+app.use("/", staticRouter);
 app.use('/user', userRoute);
 
 app.listen(PORT, () => console.log(`Server started at PORT:${PORT}`));
