@@ -4,4 +4,5 @@
 Project-01/node_modules
 Short_URL/node_modules
 Short_URL/setup.txt
-Image_upload/node_modules
+Youtube_blog/node_modules
+Youtube_blog/.env
